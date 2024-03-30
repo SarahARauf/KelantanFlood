@@ -257,10 +257,10 @@ def main():
 
     #st.subheader('Prediction:')
 
-    st.write(input_data)
-    st.write(display_data)
+    # st.write(input_data)
+    # st.write(display_data)
 
-    st.write(prediction.tolist())
+    # st.write(prediction.tolist())
 
 
 if __name__ == '__main__':
