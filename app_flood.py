@@ -124,8 +124,9 @@ def fetch_API(selected_town):
         "longitude": latlong[1],
         "hourly": ["temperature_2m", "relative_humidity_2m", "cloud_cover", "rain", "precipitation_probability", "weather_code"],
         "daily": ["temperature_2m_max", "rain_sum", "precipitation_hours"],
-        "start_date": "2023-12-17",
-	      "end_date": "2023-12-28"
+	"forecast_days": 7
+ #        "start_date": "2023-12-17",
+	# "end_date": "2023-12-28"
     }
     responses = openmeteo.weather_api(url, params=params)
 
