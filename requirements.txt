@@ -5,3 +5,5 @@ requests-cache==1.2.0
 retry-requests==2.0.0
 folium==0.14.0
 streamlit-folium==0.18.0
+numpy==1.26.4
+
