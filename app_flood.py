@@ -225,7 +225,7 @@ def main():
             st.write(f"Precipitation Probability: {row['precipitation_probability']}%")
             st.write(f"Precipitation: {round(row['rain'],1)}mm")
             st.write(f"Cloud Cover: {row['cloudcover (%)']}%")
-            st.write(f"Prediction: {'Flood' if prediction[idx] == 1 else 'No Flood'}"
+            st.write(f"Prediction: {'Flood' if prediction[idx] == 1 else 'No Flood'}")
 
 
 
