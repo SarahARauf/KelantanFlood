@@ -1,17 +1,14 @@
 import streamlit as st
 import streamlit.components.v1 as components
-
 import pickle
 import joblib
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
-
 import openmeteo_requests
 import requests_cache
 import pandas as pd
 from retry_requests import retry
-
 import folium
 from streamlit_folium import st_folium
 
@@ -125,19 +122,14 @@ def fetch_API(selected_town):
         "hourly": ["temperature_2m", "relative_humidity_2m", "cloud_cover", "rain", "precipitation_probability", "weather_code"],
         "daily": ["temperature_2m_max", "rain_sum", "precipitation_hours"],
 	"forecast_days": 7
- #        "start_date": "2023-12-17",
+ 	#"start_date": "2023-12-17",
 	# "end_date": "2023-12-28"
     }
     responses = openmeteo.weather_api(url, params=params)
 
     # Process first location. Add a for-loop for multiple locations or weather models
     response = responses[0]
-    # print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
-    # print(f"Elevation {response.Elevation()} m asl")
-    # print(f"Timezone {response.Timezone()} {response.TimezoneAbbreviation()}")
-    # print(f"Timezone difference to GMT+0 {response.UtcOffsetSeconds()} s")
 
-    # Process hourly data. The order of variables needs to be the same as requested.
     hourly = response.Hourly()
     hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
     hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
@@ -162,7 +154,6 @@ def fetch_API(selected_town):
 
 
     hourly_dataframe = pd.DataFrame(data = hourly_data)
-    #print(hourly_dataframe)
 
     # Process daily data. The order of variables needs to be the same as requested.
     daily = response.Daily()
@@ -181,7 +172,6 @@ def fetch_API(selected_town):
     daily_data["precipitation_hours (h)"] = daily_precipitation_hours
 
     daily_dataframe = pd.DataFrame(data = daily_data)
-    #print(daily_dataframe)
 
     return hourly_dataframe, daily_dataframe
 
@@ -197,17 +187,14 @@ def main():
 
     hourly_dataframe, daily_dataframe = fetch_API(selected_town)
 
-    #input_df = pd.DataFrame([input_dict])
 
     input_data, display_data = preprocess_input(hourly_dataframe, daily_dataframe)
-    #print(input_data.columns)
 
     unique_dates = sorted(set(input_data['only_date']))
     selected_date = st.sidebar.selectbox('Select a Date:', [date for date in unique_dates])
 
     prediction = predict(input_data)
 
-    #st.write(type(prediction))
 
     prediction_fordate = []
 
@@ -238,29 +225,11 @@ def main():
             st.write(f"Precipitation Probability: {row['precipitation_probability']}%")
             st.write(f"Precipitation: {round(row['rain'],1)}mm")
             st.write(f"Cloud Cover: {row['cloudcover (%)']}%")
-            st.write(f"Prediction: {'Flood' if prediction[idx] == 1 else 'No Flood'}")
-
-
-            #st.write(f"{row['weather_code']}")
-            
-            # st.write(int(row['new_time'].split(':')[0]))
-            # st.write(7 < hour and hour < 19)
+            st.write(f"Prediction: {'Flood' if prediction[idx] == 1 else 'No Flood'}"
 
 
 
             st.markdown("<hr>", unsafe_allow_html=True)
-
-
-
-
-
-
-    #st.subheader('Prediction:')
-
-    # st.write(input_data)
-    # st.write(display_data)
-
-    # st.write(prediction.tolist())
 
 
 if __name__ == '__main__':
