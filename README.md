@@ -1,6 +1,6 @@
 # Kelantan Flood Predictor
 
-A streamlit based app that predicts the occurrence of a flood in 10 districts in Kelantan.
+A streamlit based app that predicts the occurrence of a flood in 10 districts in Kelantan. View the deployed project at: https://kelantan-flood-warning.streamlit.app/
 
 <h2> Source of Data </h2>
 <ul>
